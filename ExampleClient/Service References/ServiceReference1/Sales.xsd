@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/"
+           xmlns:tns="http://schemas.datacontract.org/2004/07/Starbucks.Messages" elementFormDefault="qualified"
+           targetNamespace="http://schemas.datacontract.org/2004/07/Starbucks.Messages"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:4341/Sales.svc?xsd=xsd1"
+             namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:4341/Sales.svc?xsd=xsd4"
+             namespace="http://schemas.datacontract.org/2004/07/Starbucks" />
+  <xs:complexType name="NotifyCustomer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OrderId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NotifyCustomer" nillable="true" type="tns:NotifyCustomer" />
+  <xs:complexType name="OrderDrink">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Starbucks" minOccurs="0" name="Drink"
+                  type="q1:Drinks" />
+      <xs:element minOccurs="0" name="OrderId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderDrink" nillable="true" type="tns:OrderDrink" />
+  <xs:complexType name="Pay">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Pay" nillable="true" type="tns:Pay" />
+  <xs:complexType name="PrepareDrink">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Starbucks" minOccurs="0" name="Drink"
+                  type="q2:Drinks" />
+      <xs:element minOccurs="0" name="OrderId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PrepareDrink" nillable="true" type="tns:PrepareDrink" />
+</xs:schema>

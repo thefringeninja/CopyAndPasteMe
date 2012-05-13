@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Starbucks" elementFormDefault="qualified"
+           targetNamespace="http://schemas.datacontract.org/2004/07/Starbucks" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="Drinks">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Frappacino" />
+      <xs:enumeration value="Cappucino" />
+      <xs:enumeration value="Espresso" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Drinks" nillable="true" type="tns:Drinks" />
+</xs:schema>
