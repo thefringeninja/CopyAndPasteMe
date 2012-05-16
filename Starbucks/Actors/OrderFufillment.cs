@@ -13,19 +13,17 @@ namespace Starbucks.Actors
             IObservable<PaymentReceived> payments = Subscribe<PaymentReceived>();
             IObservable<DrinkPrepared> preparations = Subscribe<DrinkPrepared>();
 
-            orders.On()
-                .Dispatch(e => new PrepareDrink
-                                   {
-                                       OrderId = e.OrderId,
-                                       Drink = e.Drink
-                                   }, Dispatch);
+            DispatchWhen(orders, e => new PrepareDrink
+                                          {
+                                              OrderId = e.OrderId,
+                                              Drink = e.Drink
+                                          });
 
-            payments.Zip(preparations, Tuple.Create)
-                .On()
-                .Dispatch(result => new NotifyCustomer
-                                      {
-                                          OrderId = result.Item1.OrderId
-                                      }, Dispatch);
+            DispatchWhen(payments.Zip(preparations, Tuple.Create),
+                         result => new NotifyCustomer
+                                       {
+                                           OrderId = result.Item1.OrderId
+                                       });
         }
     }
 }

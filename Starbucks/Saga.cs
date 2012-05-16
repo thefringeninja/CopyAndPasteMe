@@ -9,7 +9,6 @@ namespace Starbucks
     public class Saga<TSaga> : ISaga
         where TSaga : Saga<TSaga>, ISaga
     {
-        public static IDictionary<Type, Func<Object, Guid>> correlations;
         private readonly IList<Event> changes = new List<Event>();
         private readonly ISubject<Event> source;
         private readonly IList<Command> undispatched = new List<Command>();
@@ -59,9 +58,13 @@ namespace Starbucks
 
         #endregion
 
-        protected void Dispatch(Command command)
+        protected void DispatchWhen<T>(IObservable<T> observable, Func<T, Command> command, int numberOfTimes = 1)
         {
-            undispatched.Add(command);
+            if (numberOfTimes <= 0)
+            {
+                throw new InvalidOperationException();
+            }
+            observable.Take(numberOfTimes).Select(command).Subscribe(undispatched.Add);
         }
 
         protected IObservable<TEvent> Subscribe<TEvent>()
